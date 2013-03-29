@@ -1,0 +1,5 @@
+PROJECT(lan CXX)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+set (EXECUTABLE_OUTPUT_PATH ../bin)
+ADD_DEFINITIONS(-Wall -std=gnu++0x -ggdb)
+ADD_EXECUTABLE (princ src/main.cpp)
