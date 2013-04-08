@@ -125,14 +125,13 @@ void display(void)
 //	framerate();
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //vide r√àellement la fen√çtre
 	glLoadIdentity();
+	glTranslated(0,0,R-10); 
 	float* sommets = test->toSommetsTab();
 	GLuint * indexes = test->toIndexTab();
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3,GL_FLOAT,0,sommets);
-	glTranslated(0,0,-10);
 	//	glColor3f(0,255,0);
-	
-	glDrawElements(GL_TRIANGLES,8*3,GL_UNSIGNED_INT,indexes);
+	glDrawElements(GL_TRIANGLES,test->getHeight()*test->getLength()*3,GL_UNSIGNED_INT,indexes);
 	glutSwapBuffers();
 	delete sommets;
 	delete indexes;
@@ -161,25 +160,23 @@ void reshape (int w, int h)
 
 void key(unsigned char key,int x,int y) {
 	switch ( key ) {
-		case 'w'  : R-=0.1f;printf(" %f -Rayon ",R);						
+		case 'w'  : R-=0.1;printf(" %f -Rayon ",R);						
 			break;
-		case 'x'  : R+=0.1f; printf(" %f +Rayon ",R);					
+		case 'x'  : R+=0.1; printf(" %f +Rayon ",R);					
 			break;			
 	case 0x1B : exit(0); }
 	MyReDisplay();
 }
 
 void GestionSpecial(int key, int x, int y)
-{printf("vous avez appuy√à sur ");
+{
+  printf("vous avez appuy√à sur ");
 	switch (key)
-	{	
-		case GLUT_KEY_F1 : printf("F1 ");glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+	  {	
+	  case GLUT_KEY_F1 : printf("F1 ");glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 			
-			break;
-		case GLUT_KEY_F2 : printf("F2 ");glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);break;
-
-		case GLUT_KEY_LEFT : R-=0.1;printf("Gauche ");break; 
-		case GLUT_KEY_RIGHT : R+=0.1; printf("Droite ");break; 
+	    break;
+	  case GLUT_KEY_F2 : printf("F2 ");glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);break;   
 
 	}	
 	printf("position de la souris : ");
@@ -237,9 +234,11 @@ int main(int argc, char** argv)
 
 	GLuint* indexes = test->toIndexTab();
 
-	
-	for (int i=0;i<8*3;i++)
-	  cout<<indexes[i]<<endl;
+	cout<<test->getHeight()*test->getLength()*3<<endl;
+
+
+	for (int i=100;i<test->getHeight()*test->getLength()*3;i++)
+	  cout<<indexes[i++]<<" "<<indexes[i++]<<" "<<indexes[i]<<endl;
 	
 	int sMenu;
 	sMenu = glutCreateMenu(Menu2);
